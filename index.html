@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Finbroker — редизайн главного экрана, продуктовая логика и интерактивный прототип." />
+  <title>Finbroker — продуктовый редизайн</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <defs>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+      <symbol id="i-accounts" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+      <symbol id="i-trade" viewBox="0 0 24 24"><path d="M6 3v18M18 3v18M3 8h6M15 15h6"/><rect x="4" y="8" width="4" height="7" rx="1"/><rect x="16" y="9" width="4" height="6" rx="1"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c.6-5 3.3-7 8-7s7.4 2 8 7"/></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0v5l2 3H4l2-3zM10 20h4"/></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5a8 8 0 0 1 16 0v6a8 8 0 0 1-9 8l-5 3 1-5a8 8 0 0 1-3-6z"/><circle cx="9" cy="10" r="1"/><circle cx="12" cy="10" r="1"/><circle cx="15" cy="10" r="1"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 20 5v6c0 5-3.2 8.2-8 10-4.8-1.8-8-5-8-10V5z"/><path d="m8 11 2.5 2.5L16 8"/></symbol>
+      <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 10 6-6 6 6M12 4v16"/></symbol>
+      <symbol id="i-transfer" viewBox="0 0 24 24"><path d="M4 8h15l-4-4M20 16H5l4 4"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4h5a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H4zM20 4h-5a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h5z"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19V9M9 19V5M14 19v-7M19 19V3"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+      <symbol id="i-figma" viewBox="0 0 24 24"><path d="M8 3h4v6H8a3 3 0 0 1 0-6Zm4 0h4a3 3 0 0 1 0 6h-4zM8 9h4v6H8a3 3 0 0 1 0-6Zm4 0h4a3 3 0 1 1-4 0ZM8 15h4v3a3 3 0 1 1-4-3Z"/></symbol>
+      <symbol id="i-github" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3 19.5v-2.2c-2.4.5-3-1-3-1-.4-1-1-1.3-1-1.3-.8-.6.1-.6.1-.6.9.1 1.4.9 1.4.9.8 1.4 2.1 1 2.6.8.1-.6.3-1 .6-1.2-1.9-.2-3.9-1-3.9-4.4 0-1 .3-1.8.9-2.4-.1-.2-.4-1.1.1-2.4 0 0 .8-.2 2.5.9a8.7 8.7 0 0 1 4.6 0c1.7-1.1 2.5-.9 2.5-.9.5 1.3.2 2.2.1 2.4.6.6.9 1.4.9 2.4 0 3.4-2 4.2-3.9 4.4.3.3.6.8.6 1.6v3.3A10 10 0 0 0 12 2Z"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Finbroker Case Study"><span>F</span> finbroker <small>case study</small></a>
+    <nav class="site-nav" aria-label="Навигация по кейсу">
+      <a href="#logic">Логика</a><a href="#system">Система</a><a href="#prototype">Прототип</a><a href="#result">Результат</a>
+    </nav>
+    <a class="header-link" href="https://www.figma.com/design/5tYy9zYeK8ZBFzbT8q5Y12/финброкер?node-id=120-2" target="_blank" rel="noreferrer"><svg><use href="#i-figma"/></svg>Открыть Figma</a>
+  </header>
+
+  <main id="top">
+    <section class="hero section-shell">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> Product design · Fintech · 2026</p>
+        <h1>Главный экран, который подсказывает <em>следующий шаг</em></h1>
+        <p class="hero-lead">Редизайн личного кабинета брокера для новичка в первые 7 дней: меньше конкурирующих действий, понятный переход из демо в реальную торговлю и доверие до первого депозита.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#prototype">Попробовать прототип <span>↓</span></a>
+          <a class="button button-secondary" href="https://www.figma.com/design/5tYy9zYeK8ZBFzbT8q5Y12/финброкер?node-id=120-2" target="_blank" rel="noreferrer"><svg><use href="#i-figma"/></svg>Макеты в Figma</a>
+        </div>
+        <dl class="hero-meta">
+          <div><dt>Роль</dt><dd>UX/UI, прототип, UI-kit</dd></div>
+          <div><dt>Цель</dt><dd>Первый депозит ≤ 7 дней</dd></div>
+          <div><dt>Результат</dt><dd>3 состояния + рабочий flow</dd></div>
+        </dl>
+      </div>
+      <div class="hero-visual" aria-label="Превью интерфейса">
+        <div class="orb orb-one"></div><div class="orb orb-two"></div>
+        <div class="preview-card preview-card-a"><span class="mini-icon"><svg><use href="#i-shield"/></svg></span><b>Средства защищены</b><small>Сегрегированное хранение</small></div>
+        <div class="preview-card preview-card-b"><b>+$245,80</b><small>прибыль в демо</small></div>
+        <div class="mini-phone">
+          <div class="mini-status">9:41 <span>● ● ▰</span></div>
+          <div class="mini-greeting"><span>AA</span><b>Добрый день,<br>Алексей</b></div>
+          <div class="mini-tabs"><b>Демо</b><span>Реальный</span></div>
+          <div class="mini-balance"><small>MT5 · Standard</small><strong>$10 245<sup>,80</sup></strong><em>+$245,80</em></div>
+          <div class="mini-cta"><i><svg><use href="#i-check"/></svg></i><b>Перейдите к реальной торговле</b><span>Открыть реальный счёт</span></div>
+          <div class="mini-nav"><svg><use href="#i-home"/></svg><svg><use href="#i-accounts"/></svg><svg><use href="#i-trade"/></svg><svg><use href="#i-clock"/></svg><svg><use href="#i-user"/></svg></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="context-band">
+      <div><span>01</span><p>Не маскировать сложность красивой сеткой, а определить одну главную задачу пользователя.</p></div>
+      <div><span>02</span><p>Сохранять контекст счёта и менять Home в зависимости от этапа активации.</p></div>
+      <div><span>03</span><p>Объяснять безопасность рядом с решением о депозите, а не в отдельном разделе.</p></div>
+    </section>
+
+    <section class="case-section section-shell" id="logic">
+      <div class="section-heading"><p class="eyebrow"><span></span> Продуктовая логика</p><h2>От перегруженного кабинета — к адаптивному Home</h2><p>Основной пользователь уже попробовал демо, но ещё не готов рисковать реальными деньгами. Поэтому интерфейс должен не «показывать всё», а снижать неопределённость следующего действия.</p></div>
+      <div class="problem-grid">
+        <article><span>Проблема 01</span><h3>Все функции равнозначны</h3><p>Счета, платежи, обучение и торговля конкурируют между собой. Пользователь не понимает, что важно сейчас.</p></article>
+        <article><span>Проблема 02</span><h3>Один экран для всех</h3><p>Новичок с демо и опытный клиент с несколькими счетами видят почти одинаковую структуру.</p></article>
+        <article><span>Проблема 03</span><h3>Депозит без контекста</h3><p>Пополнение выглядит технической функцией, а не безопасным продолжением уже полученного демо-опыта.</p></article>
+      </div>
+      <div class="decision-panel">
+        <div><span class="decision-label">Выбранное решение</span><h3>Один каркас. Три состояния. Один следующий шаг.</h3></div>
+        <ol><li><b>Демо</b><span>Практика и доказательство ценности</span></li><li><b>Real · нет счёта</b><span>Доверие и открытие счёта</span></li><li><b>Real · активен</b><span>Пополнение и первая сделка</span></li></ol>
+      </div>
+    </section>
+
+    <section class="journey-section" aria-labelledby="journey-title">
+      <div class="section-shell">
+        <div class="section-heading inverse"><p class="eyebrow"><span></span> User journey</p><h2 id="journey-title">Цепочка решения</h2><p>Каждое состояние отвечает на один вопрос и подводит к следующему, не меняя привычную навигацию.</p></div>
+        <div class="journey-line">
+          <article><i>01</i><small>Попробовал</small><h3>Демо-счёт</h3><p>Видит баланс и прогресс, может продолжить в MT5.</p></article>
+          <b>→</b>
+          <article><i>02</i><small>Понял ценность</small><h3>Готов к real</h3><p>Получает объяснение защиты средств и минимального входа.</p></article>
+          <b>→</b>
+          <article><i>03</i><small>Принял решение</small><h3>Открыл счёт</h3><p>Home меняет главный CTA на пополнение и первую сделку.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section section-shell" id="system">
+      <div class="section-heading"><p class="eyebrow"><span></span> Visual system</p><h2>Спокойный финтех вместо «торгового терминала»</h2><p>Белая среда, почти чёрный текст и один зелёный акцент создают ощущение контролируемого продукта. Цвет сообщает действие и успех, но не превращается в декор.</p></div>
+      <div class="system-grid">
+        <div class="palette-card">
+          <div class="swatch swatch-green"><span>#00B85A</span><small>Action / Success</small></div>
+          <div class="swatch swatch-ink"><span>#10131A</span><small>Primary text</small></div>
+          <div class="swatch swatch-muted"><span>#737B8E</span><small>Secondary text</small></div>
+          <div class="swatch swatch-surface"><span>#F5F7F6</span><small>Soft surface</small></div>
+        </div>
+        <div class="type-card"><span>SF Pro / Inter fallback</span><strong>Aa</strong><h3>Деньги требуют ясности</h3><p>Крупные числа, короткие заголовки, спокойный вторичный текст. Типографика помогает сканировать экран сверху вниз.</p></div>
+      </div>
+
+      <div class="component-showcase">
+        <div class="component-title"><span>Button / Primary</span><p>Состояния компонента</p></div>
+        <div class="button-states">
+          <div><button class="ui-button">Открыть счёт</button><small>Default</small></div>
+          <div><button class="ui-button ui-button-hover">Открыть счёт</button><small>Hover</small></div>
+          <div><button class="ui-button ui-button-pressed">Открыть счёт</button><small>Pressed</small></div>
+          <div><button class="ui-button ui-button-loading"><i></i>Открываем</button><small>Loading</small></div>
+          <div><button class="ui-button" disabled>Открыть счёт</button><small>Disabled</small></div>
+          <div><button class="ui-button ui-button-outline">Подробнее</button><small>Secondary</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="prototype-section" id="prototype">
+      <div class="section-shell prototype-layout">
+        <div class="prototype-copy">
+          <p class="eyebrow"><span></span> Interactive prototype</p>
+          <h2>Можно пройти основной сценарий прямо здесь</h2>
+          <p>Переключите демо и реальный счёт, откройте счёт, а затем пройдите по разделам нижней навигации. Интерфейс сохраняет состояние пользователя.</p>
+          <div class="scenario-control" aria-label="Быстрый выбор состояния">
+            <button class="scenario-chip active" data-preview="demo">Демо</button>
+            <button class="scenario-chip" data-preview="real-empty">Real · нет счёта</button>
+            <button class="scenario-chip" data-preview="real-active">Real · активен</button>
+          </div>
+          <div class="prototype-notes">
+            <div><b>01</b><span>Demo → Real переключает контент, а не только цвет таба.</span></div>
+            <div><b>02</b><span>Главный CTA меняется после открытия реального счёта.</span></div>
+            <div><b>03</b><span>Все пять разделов навигации интерактивны.</span></div>
+          </div>
+          <a class="text-link" href="https://www.figma.com/design/5tYy9zYeK8ZBFzbT8q5Y12/финброкер?node-id=119-2" target="_blank" rel="noreferrer"><svg><use href="#i-figma"/></svg>Посмотреть структуру компонентов в Figma <span>↗</span></a>
+        </div>
+
+        <div class="device-stage">
+          <div class="device" aria-label="Интерактивный прототип Finbroker">
+            <div class="device-screen">
+              <div class="ios-status"><strong>9:41</strong><span>▮▮▮ ◒ ▰</span></div>
+              <header class="app-header"><span class="avatar">AA</span><b>Добрый день, Алексей</b><button aria-label="Уведомления"><svg><use href="#i-bell"/></svg></button><button aria-label="Чат"><svg><use href="#i-chat"/></svg></button></header>
+              <div class="account-toggle" role="group" aria-label="Тип счёта"><button data-mode="demo" class="active">Демо</button><button data-mode="real">Реальный</button><i></i></div>
+              <div class="app-content" id="appScreen" aria-live="polite"></div>
+              <nav class="app-nav" aria-label="Разделы приложения">
+                <button data-nav="home" class="active"><svg><use href="#i-home"/></svg><span>Главная</span></button>
+                <button data-nav="accounts"><svg><use href="#i-accounts"/></svg><span>Счета</span></button>
+                <button data-nav="trade"><svg><use href="#i-trade"/></svg><span>Торговля</span></button>
+                <button data-nav="operations"><svg><use href="#i-clock"/></svg><span>Операции</span></button>
+                <button data-nav="profile"><svg><use href="#i-user"/></svg><span>Профиль</span></button>
+              </nav>
+              <div class="toast" id="appToast" role="status">Реальный счёт открыт</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section section-shell" id="result">
+      <div class="section-heading"><p class="eyebrow"><span></span> Итог</p><h2>Что изменилось в продукте</h2></div>
+      <div class="result-grid">
+        <article><strong>01</strong><h3>Home стал контекстным</h3><p>Показывает статус и следующий шаг вместо полного каталога возможностей.</p></article>
+        <article><strong>02</strong><h3>Доверие встроено в flow</h3><p>Защита средств и лицензирование объясняются рядом с решением открыть счёт.</p></article>
+        <article><strong>03</strong><h3>Навигация стала стабильной</h3><p>Все глубокие функции доступны, но больше не конкурируют с главной целью.</p></article>
+      </div>
+      <div class="metric-card"><span>Основная метрика</span><h3>Первый депозит в течение 7 дней</h3><p>Дополнительно: demo → real conversion, CTR главного CTA, завершение открытия счёта и время до первого пополнения.</p></div>
+    </section>
+
+    <section class="final-cta">
+      <div><p class="eyebrow"><span></span> Deliverables</p><h2>Макеты, система и рабочий прототип собраны в одном кейсе</h2></div>
+      <div class="final-actions"><a class="button button-light" href="https://www.figma.com/design/5tYy9zYeK8ZBFzbT8q5Y12/финброкер?node-id=120-2" target="_blank" rel="noreferrer"><svg><use href="#i-figma"/></svg>Открыть Figma</a><a class="button button-ghost" href="https://github.com/kirgincev/fintest" target="_blank" rel="noreferrer"><svg><use href="#i-github"/></svg>GitHub</a></div>
+    </section>
+  </main>
+
+  <footer><a class="wordmark" href="#top"><span>F</span> finbroker</a><p>Product design case study · 2026</p><a href="#top">Наверх ↑</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>
